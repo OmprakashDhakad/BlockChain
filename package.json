@@ -1,0 +1,22 @@
+{
+  "name": "block-chain",
+  "version": "1.0.0",
+  "description": "Block chain with Mern",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OmprakashDhakad/BlockChain.git"
+  },
+  "author": "Omprakash",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OmprakashDhakad/BlockChain/issues"
+  },
+  "homepage": "https://github.com/OmprakashDhakad/BlockChain#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
