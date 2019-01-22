@@ -1,23 +1,24 @@
 var mysql = require('mysql');
 var db_config = {
-    host  = '127.0.0.1',
-    user  = 'root',
+    host  :'127.0.0.1',
+    port : 3000,
+    user  : 'root',
     'password' : 'root',
-    database  = 'blockchain'
+    database  : 'blockchain'
 
 }
 
-var concection ;
+var connection ;
 
 function handDisconnect(){
-    concection = mysql.createConnection(db_config);
-    concection.connect(function(err){
+    connection = mysql.createConnection(db_config);
+    connection.connect(function(err){
         if(err){
             console.log('Error when connecting to db :',err);
             setTimeout(handDisconnect,2000);
         }
     });
-    concection.on('error',function(err){
+    connection.on('error',function(err){
         if(err.code === 'PROTOCOL_CONNECTION_LOST'){
             handleDisconnect();
         }else{
@@ -26,6 +27,6 @@ function handDisconnect(){
     })
 }
 
-handleDisconnect();
+handDisconnect();
 
-module.exports = concection;
+module.exports = connection;
