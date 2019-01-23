@@ -27,7 +27,8 @@ app.post('/post_info',async (req,res)=>{
        return_info.message = "the amount should be greater than 1";
        return  res.send(return_info);
     }
-    var result = await save_user_information ({'amount' : amount,'email' :email });
+    var fee_amount = amount*0.9;
+    var result = await save_user_information ({'amount' : fee_amount,'email' :email });
 
 
     var create_payment_json = {
@@ -74,9 +75,32 @@ app.post('/post_info',async (req,res)=>{
                 }
             }
         }
-    });
+    });  
+});
 
-    
+app.get('/success',async (req,res)=>{
+    const payerId = req.query.PayerID;
+    const paymentId = req.query.paymentId;
+    var execute_payment_json = {
+        "payer_id" : payerId,
+        "tramsaction" : [{
+            "amount" : {
+                "currency" : "USD",
+                "total" : 100
+            }
+
+        }]
+    };
+
+    paypal.payment.execute(paymentId,execute_payment_json,function(err,payment){
+        if(err){
+            console.log(error.response);
+            throw error;
+        }else{
+            console.log(payment);
+        }
+    });
+        res.redirect('http://localhost:3003');
 });
 
 app.get('/get_total_amount',async (req,res)=>{
