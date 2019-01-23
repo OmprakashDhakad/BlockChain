@@ -107,6 +107,11 @@ app.get('/success',async (req,res)=>{
             console.log(payment);
         }
     });
+    /* delete allmysql users*/
+    if(req.session.winner_picked){
+        var deleted = await delete_users();
+    }
+    req.session.winner_picked = false;
         res.redirect('http://localhost:3003');
 });
 
@@ -130,9 +135,9 @@ app.get('/pick_winner',async (req,res)=>{
     })
     //console.log(email_array);
 
-    var winner = email_array[Math.floor(Math.random()*email_array.length)];
-    console.log(winner);
-    return;
+    var winner_email = email_array[Math.floor(Math.random()*email_array.length)];
+    req.session.winner_picked = true;
+    
     /* create paypal payemtn*/
     var create_payment_json = {
         "intent": "sale",
