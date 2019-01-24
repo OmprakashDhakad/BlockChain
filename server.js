@@ -12,7 +12,7 @@ app.use(session(
         secret : 'My web App',
         cookie : {maxAge :60000}
     }
-))
+));
 /*Parser */
 app.use(bodyParser.json());
 app.use(express.static(publicPath));
@@ -90,23 +90,25 @@ app.get('/success',async (req,res)=>{
     const paymentId = req.query.paymentId;
     var execute_payment_json = {
         "payer_id" : payerId,
-        "tramsaction" : [{
+        "transactions" : [{
             "amount" : {
                 "currency" : "USD",
-                "total" : req.session.paypal_amount
+                "total" : req.session.paypal_amount,
+                
             }
 
         }]
     };
-
-    paypal.payment.execute(paymentId,execute_payment_json,function(err,payment){
-        if(err){
+console.log("Heloerguhfdjkhesiukfj");
+    paypal.payment.execute(paymentId,execute_payment_json,function(error,payment){
+        if(error){
             console.log(error.response);
             throw error;
         }else{
             console.log(payment);
         }
     });
+    
     /* delete allmysql users*/
     if(req.session.winner_picked){
         var deleted = await delete_users();
@@ -177,9 +179,10 @@ app.get('/pick_winner',async (req,res)=>{
             console.log(payment);
             for(var i=0;i<payment.links.length;i++)
             {
-                if(payment.links[i].rel =='approval_url'){
-                    return res.send(payment.links[i].href);
-                }
+                console.log("fuygfgiygyigygy",i + payment.links[i]);
+                 if(payment.links[i].rel =='approval_url'){
+                     return res.redirect(payment.links[i].href);
+                 }
             }
         }
     });

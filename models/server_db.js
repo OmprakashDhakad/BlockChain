@@ -35,7 +35,7 @@ db.query('delete from lottery_information where ID > 0',null,function(err,result
     if(err){
         reject('could not delete all users');
     }
-    resolve("successfull deleted all users");
+    resolve("successful on  deleting all users");
 })
 })
 module.exports = {
